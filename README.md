@@ -25,7 +25,7 @@ This repository includes:
 
 To train StablePose on T-LESS dataset, run
 ```
-python train_tless.py -tless
+python train_tless.py
 ```
 To train StablePose on NOCS-REAL275 dataset, run 
 ```
