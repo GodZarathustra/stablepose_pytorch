@@ -15,10 +15,6 @@ This repository includes:
   ** datasets/tless/dataset_test.py: the evaluation dataloader for tless dataset  
   ** datasets/tless/dataset_config/*.txt: training and testing splits for tless dataset
 
-  ** datasets/shapenet/dataset.py: the training dataloader for shapnet dataset  
-  ** datasets/shapenet/dataset_eval.py: the evaluation dataloader for shapnet dataset  
-  ** datasets/shapenet/dataset_config/*.txt: training and testing splits for shapenet dataset 
-
   ** datasets/linemod/dataset.py: the training dataloader for linemod dataset  
   ** datasets/linemod/dataset_eval.py: the evaluation dataloader for linemod dataset  
   ** datasets/linemod/dataset_config/*.txt: training and testing splits for linemod dataset
