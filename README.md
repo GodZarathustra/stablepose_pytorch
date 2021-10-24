@@ -66,4 +66,4 @@ The detection results tless can be found at [this link](https://drive.google.com
 The trained model for lmo can be found at [this link](https://drive.google.com/file/d/1r-RlnVrOseu9gmeG8WbptwsrWcnEkcDp/view?usp=sharing).
 The trained model for tless can be found at [this link](https://drive.google.com/file/d/1jdVSwBJduUpd7hv2_jrN__ZNjpiGsakO/view?usp=sharing).
 
-the dataset can be found at [here](https://pan.baidu.com/s/1cbRP2dgv4opkgmk8UUVbWQ) (baidu yunpan, password: qde4) and [here](https://pan.baidu.com/s/1q6wM21l5IM2zs8KsmDRzIg) (baidu yunpan, password: cqqx).
+For full training and testing dataset: [here](https://pan.baidu.com/s/1q6wM21l5IM2zs8KsmDRzIg) (baidu yunpan, password: cqqx).
