@@ -25,10 +25,10 @@ class PoseDataset(data.Dataset):
     def __init__(self, mode, num_pt, add_noise, root, noise_trans, refine):
         if mode == 'train':
             self.mode = 'train'
-            self.path = proj_dir + 'datasets/linemod/dataset_config/new_train_lmo_ls.txt'
+            self.path = proj_dir + 'datasets/linemod/dataset_config/train_lmo_ls.txt'
         elif mode == 'test':
             self.mode = 'test'
-            self.path = proj_dir + 'datasets/linemod/dataset_config/detection_0926.txt'
+            self.path = proj_dir + 'datasets/linemod/dataset_config/detection_result.txt'
         self.num_pt = num_pt
         self.root = root
         self.add_noise = add_noise
