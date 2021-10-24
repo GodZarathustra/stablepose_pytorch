@@ -1,4 +1,4 @@
-# dataloader of augmented original t-less dataset
+
 import torch.utils.data as data
 from PIL import Image
 import os
@@ -25,10 +25,10 @@ class PoseDataset(data.Dataset):
     def __init__(self, mode, num_pt, add_noise, root, noise_trans, refine):
         if mode == 'train':
             self.mode = 'train'
-            self.path = proj_dir + 'datasets/linemod/dataset_config/train_lmo_ls.txt'
+            self.path = proj_dir + 'datasets/linemod/dataset_config/new_train_lmo_ls.txt'
         elif mode == 'test':
             self.mode = 'test'
-            self.path = proj_dir + 'datasets/linemod/dataset_config/detection_result.txt'
+            self.path = proj_dir + 'datasets/linemod/dataset_config/detection_0926.txt'
         self.num_pt = num_pt
         self.root = root
         self.add_noise = add_noise
@@ -45,10 +45,7 @@ class PoseDataset(data.Dataset):
                 break
             if input_line[-1:] == '\n':
                 input_line = input_line[:-1]
-            # if input_line[:5] == 'train_primesense/':
-            #     self.real.append(input_line)
-            # else:
-            #     self.syn.append(input_line)
+
             self.list.append(input_line)
         input_file.close()
 
@@ -103,14 +100,9 @@ class PoseDataset(data.Dataset):
             ############# load json
             for i in range(2, 3):
                 datadir = 'test/' + str(i).zfill(6)
-                info_file = open('{0}/{1}/scene_gt_info.json'.format(self.root, datadir), 'r', encoding='utf-8')
-                gt_file = open('{0}/{1}/scene_gt.json'.format(self.root, datadir), 'r', encoding='utf-8')
                 cam_file = open('{0}/{1}/scene_camera.json'.format(self.root, datadir), 'r', encoding='utf-8')
-                info = json.load(info_file)
-                gt = json.load(gt_file)
                 cam = json.load(cam_file)
-                self.info_list.append(info)
-                self.gt_list.append(gt)
+
                 self.cam_list.append(cam)
                 print('loading testing '+str(i)+' yml files')
 
@@ -122,9 +114,7 @@ class PoseDataset(data.Dataset):
         self.norm1 = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         self.norm2 = transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         self.symmetry_obj_idx = [6-1,7-1]
-        # self.rot_index = [1, 2, 3, 4, 13, 14, 15, 16, 17, 24, 30]
-        # self.ref_index = [5, 6, 7, 8, 9, 10, 11, 12, 19, 20, 23, 25, 26, 27, 28, 29]
-        # self.nosym_obj_idx = [18, 21, 22]
+
         self.rot_obj_idx = []
         self.ref_obj_idx = [6-1,7-1]
         self.nosym_obj_idx = [0,1,2,3,4,7]
@@ -274,12 +264,7 @@ class PoseDataset(data.Dataset):
             idx = int(obj_order)
             im_id = int(data_num)
             scene_id = int(dir_num)
-
-            info = self.info_list[0]
-            gt = self.gt_list[0]
             cam = self.cam_list[0]
-            obj_num = len(gt[str(int(data_num))])
-
 
             depth = np.array(Image.open('{0}/{1}/{2}/{3}.png'.format(self.root, data_dir, 'depth', data_num)))
             label = np.array(Image.open(
@@ -293,26 +278,19 @@ class PoseDataset(data.Dataset):
                     '{0}/{1}/{2}/{3}_{4}.png'.format(self.root, data_dir, 'mask_visib_pred', data_num,
                                                      str(idx).zfill(6))))
 
-            # patch_label = np.array(Image.open(
-            #     '{0}/{1}/{2}/{3}_{4}.png'.format(self.root, data_dir, 'segmentation_pred', data_num, str(idx).zfill(6))))
+
             img = Image.open('{0}/{1}/{2}/{3}.png'.format(self.root, data_dir, 'rgb', data_num.zfill(6)))
-            # normal = np.array(Image.open(
-                # '{0}/{1}/{2}/{3}_{4}.png'.format(self.root, data_dir, 'normal', data_num, str(idx).zfill(6))))
+
             choose_file = '{0}/{1}/{2}/{3}_{4}_choose.list'.format(self.root, data_dir, 'segmentation_pred', data_num,
                                                                    str(idx).zfill(6))
 
-            # '/data2/yifeis/pose/stablepose_data_release/T-LESS/test_primesense/000001/mask_visib_pred/scene_pred.txt'
             label_file = '{0}/{1}/{2}/scene_pred.txt'.format(self.root, data_dir, 'mask_visib_pred')
             label_info = pd.read_csv(label_file, index_col=0, header=None, sep=" ")
             label_name = '{0}_{1}.png'.format(data_num, str(idx).zfill(6))
             obj_id = label_info.loc[label_name][5]
             model_info = self.model_info[str(int(obj_id))]
             obj_idx=self.cls_id_ls.index(obj_id)
-            # if os._exists(choose_file):
-            #     with open(choose_file) as f:
-            #         data = f.readlines()
-            # else:
-            #     data=['0']
+
 
             choose_ls = []
             stable_ls = []
@@ -360,16 +338,12 @@ class PoseDataset(data.Dataset):
                 label = label[:, :, 0]
 
             img_masked = self.trans(img)[:, rmin:rmax, cmin:cmax]
-            # img_masked = np.transpose(np.array(img)[:, :, :3], (2, 0, 1))[:, rmin:rmax, cmin:cmax]
             mask_depth = ma.getmaskarray(ma.masked_not_equal(depth, 0))
             mask_label = ma.getmaskarray(ma.masked_equal(label, 255))
             mask = mask_label * mask_depth
             mask_patch = mask * patch_label
             mask_num = len(mask.flatten().nonzero()[0])
 
-            # target_r = gt[str(int(data_num))][idx]['cam_R_m2c']
-            # target_r = np.array(target_r).reshape(3, 3).T
-            # target_t = np.array(gt[str(int(data_num))][idx]['cam_t_m2c'])
             target_r = np.ones((3, 3))
             target_t = np.ones(3)
             rt = np.append(target_r.reshape(-1), target_t.reshape(-1)).reshape(1, 12)
@@ -400,11 +374,6 @@ class PoseDataset(data.Dataset):
             pt0 = (ymap_masked - cam_cx) * pt2 / cam_fx
             pt1 = (xmap_masked - cam_cy) * pt2 / cam_fy
             cloud = np.concatenate((pt0, pt1, pt2, pt3), axis=1)
-
-            # nx = normal_maskd[:, 0] / 255.0 * 2 - 1
-            # ny = normal_maskd[:, 1] / 255.0 * 2 - 1
-            # nz = normal_maskd[:, 2] / 255.0 * 2 - 1
-            # normals = np.concatenate((nx, ny, nz), axis=1)
 
             dellist = [j for j in range(0, len(self.cld[obj_id]))]
             if self.refine:
