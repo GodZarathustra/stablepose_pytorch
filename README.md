@@ -16,11 +16,11 @@ This repository includes:
   ** datasets/tless/dataset_config/*.txt: training and testing splits for tless dataset
 
   ** datasets/linemod/dataset.py: the training dataloader for linemod dataset  
-  ** datasets/linemod/dataset_eval.py: the evaluation dataloader for linemod dataset  
+  ** datasets/linemod/dataset_lmo_test.py: the evaluation dataloader for linemod dataset  
   ** datasets/linemod/dataset_config/*.txt: training and testing splits for linemod dataset
 
   ** datasets/nocs/dataset.py: the training dataloader for nocs dataset  
-  ** datasets/nocs/dataset_eval.py: the evaluation dataloader for nocs dataset  
+  ** datasets/nocs/dataset_nocs_eval.py: the evaluation dataloader for nocs dataset  
   ** datasets/nocs/dataset_config/*.txt: training and testing splits for nocs dataset
 
 To train StablePose on T-LESS dataset, run
