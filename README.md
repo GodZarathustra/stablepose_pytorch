@@ -12,7 +12,7 @@ This repository includes:
 
 * datasets: the dataloader and training/testing lists  
   ** datasets/tless/dataset.py: the training dataloader for tless dataset  
-  ** datasets/tless/dataset_eval.py: the evaluation dataloader for tless dataset  
+  ** datasets/tless/dataset_test.py: the evaluation dataloader for tless dataset  
   ** datasets/tless/dataset_config/*.txt: training and testing splits for tless dataset
 
   ** datasets/shapenet/dataset.py: the training dataloader for shapnet dataset  
