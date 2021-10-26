@@ -58,8 +58,16 @@ python test_nocs.py
 
 ## Pretrained model & data download
 The detection results lmo can be found at [this link](https://drive.google.com/file/d/1Tde_jPLxsi-KeYi0gI8qAC1-xmo7kFzL/view?usp=sharing).
+
+
 The detection results tless can be found at [this link](https://drive.google.com/file/d/1cDHdfyGourdJoPJlHODyoWkTkYoVa7sm/view?usp=sharing).
+
+
 The trained model for lmo can be found at [this link](https://drive.google.com/file/d/1r-RlnVrOseu9gmeG8WbptwsrWcnEkcDp/view?usp=sharing).
+
+
 The trained model for tless can be found at [this link](https://drive.google.com/file/d/1jdVSwBJduUpd7hv2_jrN__ZNjpiGsakO/view?usp=sharing).
+
+Note for simplicity and fair comparison, we combine all the categories in a single model for both instance-level and category-level in this repo, wich is different from the implementation in our paper and brings performance decline. 
 
 For full training and testing dataset: [here](https://pan.baidu.com/s/1q6wM21l5IM2zs8KsmDRzIg) (baidu yunpan, password: cqqx).
